@@ -25,7 +25,7 @@ const Navigation = (props) => {
                             Home
                         </Button>
                     </NavLink>
-                    <NavLink to={'/bookings'} style={{textDecoration:'none'}}>
+                    <NavLink to={'/BookingList'} style={{textDecoration:'none'}}>
                         <Button sx={{ my: 2, color: 'white', display: 'block' }}>
                             Bookings
                         </Button>

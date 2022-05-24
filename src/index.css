@@ -13,3 +13,7 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+#grad {
+  background-image: linear-gradient(to right, red , yellow);
+}
