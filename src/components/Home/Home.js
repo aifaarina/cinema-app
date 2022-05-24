@@ -51,10 +51,10 @@ return (
         <Grid container spacing={4}>
         {movies.map((item) => (
             <Grid item key={item.id} xs={12} sm={6} md={3}>
-            <Card sx={{ maxWidth: 300 }}>
+            <Card sx={{ maxWidth: 300, minHeight:720  }}>
                 <CardMedia
                 component="img"
-                height="140"
+                height="200"
                 image={item.image}
                 alt="green iguana"
                 />
