@@ -15,15 +15,26 @@ import Box from '@mui/material/Box';
 import { Button } from "@mui/material";
 import { useNavigate } from 'react-router-dom';
 // import EditBooking from "../EditBooking";
-// import { Pagination } from "@mui/material";
-// import usePagination from "../Pagination/Pagination";
-
+import { Pagination } from "@mui/material";
+import usePagination from "../Pagination/Pagination";
+import Container from '@mui/material/Container';
 
 export default function BookingList() {
     const [movies, setMovies] = useState([]);
     const [edit, setEdit] = useState(false);
     const [data, setUpdate] = useState(null);
     const navigate = useNavigate();
+
+      // pagination handling
+      let [page, setPage] = useState(1);
+      const PER_PAGE = 4;
+      const count = Math.ceil(movies.length / PER_PAGE);
+      const _DATA = usePagination(movies, PER_PAGE);
+      const handlePaginationChange = (e, p) => {
+          setPage(p);
+          _DATA.jump(p);
+      };
+
     useEffect(()=>{
         fetchBooking();
     }, []);
@@ -61,7 +72,7 @@ export default function BookingList() {
         setEdit(true);
     }
 
-    const lists = movies.map((item) => (
+    const lists = _DATA.currentData().map((item) => (
         <TableRow
             key={item.id}
             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -87,9 +98,9 @@ export default function BookingList() {
             <CssBaseline />
             <Box sx={{
                 bgcolor: 'background.paper',
-                pt: 20,
+                pt: 2,
                 pb: 6,
-                mx: 20
+                mx: 5
             }}>
             
             
@@ -113,6 +124,16 @@ export default function BookingList() {
                 </TableBody>
             </Table>
             </TableContainer>
+            <Container maxWidth="xxl">
+                    <Pagination
+                        count={count}
+                        size="large"
+                        page={page}
+                        variant="outlined"
+                        shape="rounded"
+                        onChange={handlePaginationChange}
+                    />
+                </Container>
                 <Copyright />
             </Box>
             {/* Total Order : <FormattedMoney value={getTotal()} /> */}

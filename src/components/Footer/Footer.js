@@ -5,9 +5,10 @@ import Typography from '@mui/material/Typography';
 
 const Footer = () => {
     return(
-        <Box sx={{ bgcolor: 'background.paper', p: 1 }} component="footer">
+        <div className="Footer">
+        <Box sx={{ bgcolor: ' ', p: 1 }} component="footer">
                 <Typography variant="h7" align="center" gutterBottom>
-                    Cinema Booksite
+                    Aurum Cinema of dream 
                 </Typography>
                 <Typography
                     variant="subtitle1"
@@ -19,6 +20,7 @@ const Footer = () => {
                 </Typography>
                 <Copyright />
             </Box>
+            </div>
     )
 }
 export default Footer;

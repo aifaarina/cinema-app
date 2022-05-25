@@ -34,6 +34,8 @@ const BookingForm = () => {
   useEffect(() => {
     fetchMovie();
   }, []);
+
+  
   const fetchMovie = async () => {
     await axios
       .get(`http://127.0.0.1:8000/api/movies/${movieId}`)
@@ -125,7 +127,9 @@ const BookingForm = () => {
                   padding: "5px",
                   height: "100%",
                 }}
-                src={movie.image}
+                src={
+                  `http://127.0.0.1:8000/storage/images/${movie.image}`
+                }
                 alt={movie.title}
               />
               <CardContent sx={{ flexGrow: 1 }}>

@@ -12,12 +12,24 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Navigation from "../Navigation/Navigation";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
-
+import { Pagination } from "@mui/material";
+import usePagination from "../Pagination/Pagination";
+import Container from '@mui/material/Container';
 
 const Home = (props) => {
 const [movies, setMovies] = useState([]);
 const [items, setItems] = useState([]);
 const navigate = useNavigate();
+
+// pagination handling
+    let [page, setPage] = useState(1);
+    const PER_PAGE = 4;
+    const count = Math.ceil(movies.length / PER_PAGE);
+    const _DATA = usePagination(movies, PER_PAGE);
+    const handlePaginationChange = (e, p) => {
+        setPage(p);
+        _DATA.jump(p);
+    };
 
 useEffect(() => {
     fetchProduct();
@@ -47,16 +59,17 @@ return (
     {<Navigation />}
     
 <div className="Test">
-<h1> Cinema Booking Site </h1>
+<h1> Aurum Cinema </h1>
         <Grid container spacing={4}>
-        {movies.map((item) => (
+        {_DATA.currentData().map((item) => (
             <Grid item key={item.id} xs={12} sm={6} md={3}>
-            <Card sx={{ maxWidth: 300, minHeight:720  }}>
+            <Card sx={{ maxWidth: 350, minHeight:800, maxHeight:820 }}>
                 <CardMedia
                 component="img"
-                height="200"
-                image={item.image}
-                alt="green iguana"
+                height="400"
+                width= "50%"
+                margin = "auto"
+                image={`http://127.0.0.1:8000/storage/images/${item.image}`}
                 />
                 <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
@@ -65,18 +78,28 @@ return (
                 <Typography variant="body2" color="text.secondary">
                     {item.description}
                 </Typography>
-                <Typography gutterBottom variant="h5" component="div">
-                    {item.price}
-                </Typography>
                 </CardContent>
                 <CardActions>
                 <Button size="small" onClick={(e) => handleBooking(item.id)}>Book</Button>
-                <Button size="small">Info</Button>
+                <Typography gutterBottom variant="h5" component="div" sx={{ textAlign: 'right', width: '100%' }}>
+                    {`RM ${item.price}`}
+                </Typography>
                 </CardActions>
             </Card>
             </Grid>
         ))}
         </Grid>
+        <Container maxWidth="xxl">
+                    <Pagination
+                        id = 'homePagination'
+                        count={count}
+                        size="large"
+                        page={page}
+                        variant="outlined"
+                        shape="rounded"
+                        onChange={handlePaginationChange}
+                    />
+                </Container>
 </div>
     {<Footer /> }
     </ThemeProvider>
